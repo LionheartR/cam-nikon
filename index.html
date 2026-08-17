@@ -224,11 +224,10 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* Video Element with GPU compositing layer */
-  .intro-video {
+  /* Canvas Element with GPU compositing layer */
+  .intro-canvas {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover;
     z-index: 1;
     filter: brightness(0.7) contrast(1.15);
     will-change: transform, filter;
@@ -237,7 +236,7 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     pointer-events: none;
-    transition: filter 0.5s ease;
+    display: block;
   }
 
   /* Vignette & Gradient Overlays */
@@ -1253,11 +1252,8 @@
 <div class="intro-scroll-container" id="intro">
   <div class="intro-sticky">
     
-    <!-- HTML5 Video Element for Smooth Frame Scrubbing -->
-    <video class="intro-video" id="introVideo" muted playsinline webkit-playsinline preload="auto">
-      <source src="Person_catching_falling_camera_202608121132.mp4" type="video/mp4">
-      Your browser does not support HTML5 video playback.
-    </video>
+    <!-- High-Performance GPU Canvas for Silky Smooth Scroll Scrubbing -->
+    <canvas class="intro-canvas" id="introCanvas"></canvas>
 
     <!-- Overlay Gradients -->
     <div class="intro-overlay"></div>
@@ -1750,16 +1746,86 @@
 -->
 <script>
   /* ─────────────────────────────────────────────────────────
-     SYNCHRONIZED VIDEO SCROLL SCRUBBING ENGINE
+     APPLE-GRADE GPU CANVAS FRAME SEQUENCER SCRUB ENGINE
      ───────────────────────────────────────────────────────── */
-  const video = document.getElementById('introVideo');
+  const canvas = document.getElementById('introCanvas');
+  const ctx = canvas ? canvas.getContext('2d', { alpha: false }) : null;
   const scrollContainer = document.getElementById('intro');
   const stage1 = document.getElementById('stage1');
   const stage2 = document.getElementById('stage2');
   const stage3 = document.getElementById('stage3');
 
-  let isSeeking = false;
-  let targetTime = 0;
+  const FRAME_COUNT = 240;
+  const frames = new Array(FRAME_COUNT);
+  let currentFrameIndex = -1;
+  let targetFrameIndex = 0;
+
+  function getFramePath(index) {
+    const padded = String(index).padStart(3, '0');
+    return `frames/frame_${padded}.webp`;
+  }
+
+  function resizeCanvas() {
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    renderFrame(currentFrameIndex >= 0 ? currentFrameIndex : 0);
+  }
+
+  function renderFrame(index) {
+    if (!ctx || !canvas) return;
+    const img = frames[index];
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+
+    currentFrameIndex = index;
+
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const imgWidth = img.naturalWidth;
+    const imgHeight = img.naturalHeight;
+
+    const imgRatio = imgWidth / imgHeight;
+    const canvasRatio = canvasWidth / canvasHeight;
+
+    let drawWidth, drawHeight, offsetX, offsetY;
+
+    if (canvasRatio > imgRatio) {
+      drawWidth = canvasWidth;
+      drawHeight = canvasWidth / imgRatio;
+      offsetX = 0;
+      offsetY = (canvasHeight - drawHeight) / 2;
+    } else {
+      drawHeight = canvasHeight;
+      drawWidth = canvasHeight * imgRatio;
+      offsetX = (canvasWidth - drawWidth) / 2;
+      offsetY = 0;
+    }
+
+    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  }
+
+  // Preload frame 0 immediately for 0ms initial render
+  const firstImg = new Image();
+  firstImg.src = getFramePath(0);
+  firstImg.onload = () => {
+    frames[0] = firstImg;
+    renderFrame(0);
+  };
+
+  // Preload all remaining frames in parallel into browser image cache
+  for (let i = 0; i < FRAME_COUNT; i++) {
+    if (i === 0) continue;
+    const img = new Image();
+    img.src = getFramePath(i);
+    img.onload = () => {
+      frames[i] = img;
+      if (targetFrameIndex === i) {
+        renderFrame(i);
+      }
+    };
+  }
 
   function updateScrub() {
     if (!scrollContainer) return;
@@ -1768,13 +1834,10 @@
     if (containerHeight <= 0) return;
 
     const scrollProgress = Math.min(Math.max(-containerRect.top / containerHeight, 0), 1);
+    targetFrameIndex = Math.min(Math.floor(scrollProgress * (FRAME_COUNT - 1)), FRAME_COUNT - 1);
 
-    if (video && video.duration) {
-      targetTime = scrollProgress * video.duration;
-      if (!isSeeking && Math.abs(targetTime - video.currentTime) > 0.005) {
-        isSeeking = true;
-        video.currentTime = targetTime;
-      }
+    if (targetFrameIndex !== currentFrameIndex) {
+      renderFrame(targetFrameIndex);
     }
 
     if (scrollProgress < 0.33) {
@@ -1792,33 +1855,22 @@
     }
   }
 
-  if (video) {
-    video.addEventListener('seeked', () => {
-      isSeeking = false;
-      if (video.duration && Math.abs(targetTime - video.currentTime) > 0.005) {
-        isSeeking = true;
-        video.currentTime = targetTime;
-      }
-    });
-
-    video.addEventListener('loadedmetadata', updateScrub);
-    video.addEventListener('canplay', updateScrub);
-  }
-
-  // Safety watchdog so seek state never deadlocks
-  setInterval(() => {
-    isSeeking = false;
-  }, 100);
-
   window.addEventListener('scroll', updateScrub, { passive: true });
   window.addEventListener('touchmove', updateScrub, { passive: true });
-  window.addEventListener('resize', updateScrub, { passive: true });
-
-  function renderLoop() {
+  window.addEventListener('resize', () => {
+    resizeCanvas();
     updateScrub();
-    requestAnimationFrame(renderLoop);
-  }
-  requestAnimationFrame(renderLoop);
+  }, { passive: true });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    resizeCanvas();
+    updateScrub();
+  });
+  window.addEventListener('load', () => {
+    resizeCanvas();
+    updateScrub();
+  });
+  resizeCanvas();
 
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
