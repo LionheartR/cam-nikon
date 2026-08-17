@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAM NIKON — Cinematic Photography & Direction</title>
+<meta name="description" content="Cinematic Photography & Visual Direction by Cam. Powered by Nikon Z9 precision and high-impact storytelling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,500;0,700;0,800;0,900;1,700&family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  /* ─────────────────────────────────────────────────────────
+     DESIGN SYSTEM — CINEMATIC CRIMSON RED THEME
+     ───────────────────────────────────────────────────────── */
+  :root {
+    --black:        #060606;
+    --dark-deep:    #0B0B0B;
+    --dark-surface: #121212;
+    --dark-card:    #1A1A1A;
+    --dark-hover:   #242424;
+    --border:       rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 30, 39, 0.4);
+    
+    /* NEON CRIMSON RED PALETTE (Replacing Gold Completely) */
+    --red-primary:  #E50914;
+    --red-bright:   #FF1E27;
+    --red-glow:     rgba(229, 9, 20, 0.25);
+    --red-dim:      rgba(229, 9, 20, 0.12);
+    --red-dark:     #800000;
+    
+    --white:        #F4F4F4;
+    --white-muted:  rgba(244, 244, 244, 0.65);
+    --white-dim:    rgba(244, 244, 244, 0.35);
+    
+    /* TYPOGRAPHY */
+    --font-bebas:   'Bebas Neue', sans-serif;
+    --font-barlow:  'Barlow Condensed', sans-serif;
+    --font-syne:    'Syne', sans-serif;
+    --font-mono:    'Share Tech Mono', monospace;
+    --font-serif:   'Cormorant Garamond', Georgia, serif;
+    
+    --trans-fast:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --trans-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    --radius-sm:    3px;
+    --radius-md:    6px;
+    --radius-lg:    12px;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-syne);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red-primary); border-radius: 3px; }
+
+  /* Film Grain Overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* Scanline Overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.08) 2px, rgba(0, 0, 0, 0.08) 4px);
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     NAVIGATION BAR
+     ───────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    height: 72px;
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(6, 6, 6, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: all var(--trans-normal);
+  }
+
+  nav.scrolled {
+    height: 64px;
+    background: rgba(6, 6, 6, 0.95);
+    border-bottom-color: rgba(229, 9, 20, 0.25);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--white);
+    font-family: var(--font-barlow);
+    font-size: 24px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .nav-logo .badge-red {
+    background: var(--red-primary);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 2px;
+    letter-spacing: 0.15em;
+  }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none; align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--white-muted);
+    font-family: var(--font-barlow);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    transition: color var(--trans-fast);
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+    background: var(--red-bright);
+    box-shadow: 0 0 10px var(--red-bright);
+    transition: width var(--trans-fast);
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--white);
+  }
+
+  .nav-links a:hover::after, .nav-links a.active::after {
+    width: 100%;
+  }
+
+  .nav-cta {
+    background: var(--red-primary);
+    color: var(--white);
+    border: 1px solid var(--red-bright);
+    padding: 10px 24px;
+    font-family: var(--font-barlow);
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+    box-shadow: 0 0 16px rgba(229, 9, 20, 0.3);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .nav-cta:hover {
+    background: var(--red-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(255, 30, 39, 0.6);
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none; border: none;
+    color: var(--white); cursor: pointer; padding: 8px;
+  }
+
+  /* Mobile Nav Drawer */
+  .mobile-nav {
+    display: none;
+    position: fixed; inset: 0; z-index: 2500;
+    background: rgba(6, 6, 6, 0.97);
+    backdrop-filter: blur(24px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    padding: 80px 24px;
+  }
+  .mobile-nav.open { display: flex; animation: mobileNavFade 0.25s ease; }
+  @keyframes mobileNavFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .mobile-nav-close {
+    position: absolute; top: 24px; right: 24px;
+    background: none; border: none; color: var(--white);
+    font-size: 32px; cursor: pointer; padding: 8px;
+  }
+
+  .mobile-nav a {
+    font-family: var(--font-bebas);
+    font-size: 42px; color: var(--white-muted);
+    text-decoration: none; letter-spacing: 0.08em;
+    transition: color var(--trans-fast);
+  }
+  .mobile-nav a:hover, .mobile-nav a.active { color: var(--red-bright); }
+
+  /* ─────────────────────────────────────────────────────────
+     CINEMATIC INTRO SCROLL SCRUB SECTION (STICKY 352VH UNIFORM SCRUB)
+     ───────────────────────────────────────────────────────── */
+  .intro-scroll-container {
+    position: relative;
+    height: 352vh;
+    background: var(--black);
+  }
+
+  .intro-sticky {
+    position: sticky; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Video Element with GPU compositing layer */
+  .intro-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.7) contrast(1.15);
+    will-change: transform, filter;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    transition: filter 0.5s ease;
+  }
+
+  /* Vignette & Gradient Overlays */
+  .intro-overlay {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(circle at center, transparent 30%, rgba(6, 6, 6, 0.85) 90%),
+      linear-gradient(to bottom, rgba(6,6,6,0.6) 0%, transparent 30%, transparent 70%, rgba(6,6,6,0.95) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* CAMERA HUD TELEMETRY OVERLAY */
+  .camera-hud {
+    position: absolute; inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    padding: 80px 48px 48px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: var(--font-mono);
+  }
+
+  .hud-top {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--white-muted); font-size: 13px; letter-spacing: 0.15em;
+  }
+
+  .hud-rec {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--red-bright); font-weight: 700;
+  }
+
+  .rec-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--red-bright);
+    box-shadow: 0 0 12px var(--red-bright);
+    animation: blinkRec 1.2s infinite;
+  }
+
+  @keyframes blinkRec {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(0.85); }
+  }
+
+  .hud-center-crosshair {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px; height: 180px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .hud-center-crosshair::before, .hud-center-crosshair::after {
+    content: ''; position: absolute; background: var(--red-bright);
+  }
+  /* Top-left bracket */
+  .hud-corner {
+    position: absolute; width: 14px; height: 14px; border-color: var(--red-bright); border-style: solid;
+  }
+  .hud-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .hud-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .hud-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .hud-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .hud-center-dot {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 5px; height: 5px; background: var(--red-bright); border-radius: 50%;
+    box-shadow: 0 0 8px var(--red-bright);
+  }
+
+  .hud-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    color: var(--white-muted); font-size: 12px; letter-spacing: 0.12em;
+  }
+
+  .hud-readout {
+    display: flex; gap: 20px; background: rgba(0,0,0,0.6);
+    padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    backdrop-filter: blur(8px);
+  }
+  .hud-readout span em { color: var(--red-bright); font-style: normal; font-weight: 700; }
+
+  .audio-meter {
+    display: flex; gap: 3px; align-items: flex-end; height: 20px;
+  }
+  .audio-bar {
+    width: 4px; background: var(--red-primary); border-radius: 1px;
+    animation: audioPulse 0.8s ease infinite alternate;
+  }
+  .audio-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+  .audio-bar:nth-child(2) { height: 85%; animation-delay: 0.3s; }
+  .audio-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+  .audio-bar:nth-child(4) { height: 95%; animation-delay: 0.5s; }
+  .audio-bar:nth-child(5) { height: 30%; animation-delay: 0.4s; }
+
+  @keyframes audioPulse {
+    from { transform: scaleY(0.4); opacity: 0.5; }
+    to { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* INTRO MULTI-STAGE BOLD TEXT OVERLAYS (ALIGNED TO SIDES AWAY FROM CENTER FRAME) */
+  .intro-text-wrapper {
+    position: absolute; inset: 0; z-index: 4;
+    pointer-events: none;
+  }
+
+  /* STAGE 1: Left Aligned Flank */
+  #stage1 {
+    position: absolute;
+    top: 50%; left: 5%; right: auto;
+    transform: translateY(-50%) translateX(-25px);
+    max-width: 480px; width: auto;
+    text-align: left;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  #stage1.active {
+    opacity: 1; visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .stage-1-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    text-transform: uppercase;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
+  }
+  .stage-1-title span {
+    color: var(--red-bright);
+    display: inline-block;
+    text-shadow: 0 0 24px rgba(255, 30, 39, 0.8);
+  }
+  .stage-subtitle {
+    font-family: var(--font-barlow);
+    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white-muted);
+    margin-top: 16px;
+    border-left: 3px solid var(--red-bright);
+    padding-left: 12px;
+  }
+
+  /* STAGE 2: Right Aligned Flank */
+  #stage2 {
+    position: absolute;
+    top: 50%; right: 5%; left: auto;
+    transform: translateY(-50%) translateX(25px);
+    max-width: 520px; width: auto;
+    text-align: right;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  #stage2.active {
+    opacity: 1; visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .stage-2-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .stage-2-title {
+    font-family: var(--font-barlow);
+    font-size: clamp(2.8rem, 5vw, 5.2rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
+  }
+  .stage-2-title em {
+    font-style: normal;
+    color: var(--red-bright);
+    text-shadow: 0 0 35px rgba(255, 30, 39, 0.75);
+  }
+
+  /* STAGE 3: Bottom Left Aligned Panel */
+  #stage3 {
+    position: absolute;
+    bottom: 90px; left: 5%; top: auto; right: auto;
+    transform: translateY(25px);
+    max-width: 500px; width: auto;
+    text-align: left;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  #stage3.active {
+    opacity: 1; visibility: visible;
+    transform: translateY(0);
+  }
+
+  .stage-3-box {
+    background: rgba(8, 8, 8, 0.88);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red-bright);
+    padding: 24px 32px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(16px);
+    display: block;
+  }
+  .stage-3-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--white);
+  }
+  .stage-3-desc {
+    font-family: var(--font-syne);
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    font-weight: 400;
+    color: var(--white-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .stage-3-desc span { color: var(--red-bright); font-weight: 700; }
+
+  .scroll-indicator {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--white-dim); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .scroll-mouse {
+    width: 20px; height: 32px; border: 2px solid var(--white-dim); border-radius: 10px;
+    position: relative; display: flex; justify-content: center; padding-top: 6px;
+  }
+  .scroll-mouse-wheel {
+    width: 3px; height: 6px; background: var(--red-bright); border-radius: 2px;
+    animation: scrollWheel 1.5s infinite;
+  }
+  @keyframes scrollWheel {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(10px); }
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     SECTION SYSTEM & LAYOUT
+     ───────────────────────────────────────────────────────── */
+  section {
+    padding: 120px 48px;
+    position: relative;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--red-bright);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .section-tag::before {
+    content: ''; width: 24px; height: 2px; background: var(--red-primary);
+  }
+
+  .section-heading {
+    font-family: var(--font-barlow);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .section-heading em {
+    font-style: italic; font-family: var(--font-serif);
+    color: var(--red-bright); font-weight: 400;
+  }
+
+  .section-desc {
+    font-size: 16px; font-weight: 400;
+    color: var(--white-muted); line-height: 1.7;
+    max-width: 680px; margin-bottom: 48px;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     STATS COUNTER STRIP
+     ───────────────────────────────────────────────────────── */
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 96px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .stat-card {
+    padding: 32px 24px; text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative; transition: background var(--trans-fast);
+  }
+  .stat-card:last-child { border-right: none; }
+  .stat-card:hover { background: var(--dark-card); }
+  .stat-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--red-bright); transform: scaleX(0); transition: transform var(--trans-fast);
+  }
+  .stat-card:hover::before { transform: scaleX(1); }
+
+  .stat-number {
+    font-family: var(--font-bebas);
+    font-size: 3.5rem; color: var(--red-bright);
+    line-height: 1; margin-bottom: 6px;
+    text-shadow: 0 0 16px rgba(229, 9, 20, 0.4);
+  }
+
+  .stat-label {
+    font-family: var(--font-barlow);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--white-muted);
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     PORTFOLIO SHOWCASE & CATEGORY FILTER
+     ───────────────────────────────────────────────────────── */
+  .portfolio-filter-bar {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 40px; justify-content: flex-start;
+  }
+
+  .filter-tab {
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    color: var(--white-muted);
+    padding: 10px 22px;
+    font-family: var(--font-barlow);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+  }
+
+  .filter-tab:hover, .filter-tab.active {
+    background: var(--red-primary);
+    color: var(--white);
+    border-color: var(--red-bright);
+    box-shadow: 0 0 16px rgba(229, 9, 20, 0.4);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .gallery-card {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+    transition: all var(--trans-normal);
+  }
+
+  .gallery-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--red-bright);
+    box-shadow: 0 12px 32px rgba(229, 9, 20, 0.35);
+  }
+
+  .gallery-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    filter: brightness(0.85);
+  }
+
+  .gallery-card:hover img {
+    transform: scale(1.08);
+    filter: brightness(1);
+  }
+
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.3) 50%, transparent 100%);
+    padding: 24px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    opacity: 0.9; transition: opacity var(--trans-fast);
+  }
+
+  .gallery-category {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--red-bright);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .gallery-title {
+    font-family: var(--font-barlow);
+    font-size: 24px; font-weight: 800;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 8px;
+  }
+
+  .gallery-exif {
+    display: flex; gap: 14px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--white-dim);
+  }
+
+  .gallery-exif span em { color: var(--red-bright); font-style: normal; }
+
+  /* ─────────────────────────────────────────────────────────
+     NIKON EQUIPMENT & TELEMETRY SECTION
+     ───────────────────────────────────────────────────────── */
+  .gear-section {
+    background: var(--dark-deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-top: 60px; padding: 120px 48px;
+  }
+
+  .gear-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+
+  .gear-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 36px 28px;
+    position: relative; overflow: hidden;
+    transition: all var(--trans-normal);
+  }
+
+  .gear-card:hover {
+    border-color: var(--red-bright);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(229, 9, 20, 0.25);
+  }
+
+  .gear-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--red-primary);
+  }
+
+  .gear-badge {
+    display: inline-block;
+    background: var(--red-dim); border: 1px solid rgba(229, 9, 20, 0.3);
+    color: var(--red-bright); font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700; padding: 4px 10px;
+    border-radius: 2px; letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .gear-name {
+    font-family: var(--font-barlow);
+    font-size: 28px; font-weight: 800;
+    color: var(--white); margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .gear-specs {
+    list-style: none; margin-top: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .gear-specs li {
+    font-family: var(--font-mono);
+    font-size: 12px; color: var(--white-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .gear-specs li::before {
+    content: '▶'; color: var(--red-bright); font-size: 8px;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     SERVICES & PRICING PACKAGES
+     ───────────────────────────────────────────────────────── */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+
+  .service-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px 32px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: all var(--trans-normal); position: relative;
+  }
+
+  .service-card:hover {
+    border-color: var(--red-bright);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(229, 9, 20, 0.3);
+  }
+
+  .service-card.popular {
+    border-color: var(--red-primary);
+    background: linear-gradient(145deg, var(--dark-surface) 0%, rgba(229, 9, 20, 0.08) 100%);
+  }
+
+  .popular-tag {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--red-primary); color: var(--white);
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 2px; letter-spacing: 0.15em;
+  }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: var(--red-dim); border: 1px solid rgba(229, 9, 20, 0.3);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px; color: var(--red-bright);
+  }
+
+  .service-title {
+    font-family: var(--font-barlow);
+    font-size: 26px; font-weight: 800;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px; color: var(--white-muted);
+    line-height: 1.6; margin-bottom: 28px;
+  }
+
+  .service-features {
+    list-style: none; margin-bottom: 32px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .service-features li {
+    font-size: 13px; color: var(--white-muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .service-features li svg {
+    width: 16px; height: 16px; color: var(--red-bright); flex-shrink: 0;
+  }
+
+  .service-cta {
+    width: 100%; padding: 14px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--white); font-family: var(--font-barlow);
+    font-size: 13px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; border-radius: var(--radius-sm);
+    cursor: pointer; transition: all var(--trans-fast);
+    text-align: center; text-decoration: none; display: block;
+  }
+
+  .service-card:hover .service-cta, .service-card.popular .service-cta {
+    background: var(--red-primary); border-color: var(--red-bright);
+    box-shadow: 0 0 16px rgba(229, 9, 20, 0.4);
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     BOOKING & CONTACT SECTION
+     ───────────────────────────────────────────────────────── */
+  .contact-container {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    background: var(--dark-surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 56px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  }
+
+  .contact-info-list {
+    display: flex; flex-direction: column; gap: 24px; margin-top: 32px;
+  }
+
+  .contact-info-item {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .contact-info-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-sm);
+    background: var(--red-dim); border: 1px solid rgba(229, 9, 20, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red-bright); flex-shrink: 0;
+  }
+
+  .contact-info-text strong {
+    display: block; font-family: var(--font-barlow);
+    font-size: 16px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--white); text-transform: uppercase;
+  }
+
+  .contact-info-text span {
+    font-family: var(--font-mono); font-size: 13px; color: var(--white-muted);
+  }
+
+  .booking-form {
+    display: flex; flex-direction: column; gap: 20px;
+  }
+
+  .form-group {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .form-row-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .form-group label {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--white-muted);
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 14px 18px;
+    background: var(--black); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--white);
+    font-family: var(--font-syne); font-size: 14px;
+    transition: border-color var(--trans-fast);
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none; border-color: var(--red-bright);
+    box-shadow: 0 0 12px rgba(255, 30, 39, 0.3);
+  }
+
+  .submit-btn {
+    padding: 18px; background: var(--red-primary);
+    border: 1px solid var(--red-bright); color: var(--white);
+    font-family: var(--font-barlow); font-size: 15px; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: var(--radius-sm); cursor: pointer;
+    transition: all var(--trans-fast);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover {
+    background: var(--red-bright);
+    box-shadow: 0 0 30px rgba(255, 30, 39, 0.7);
+    transform: translateY(-2px);
+  }
+
+  /* BOOKING CONFIRMATION DOSSIER RECEIPT MODAL */
+  .receipt-modal {
+    display: none; position: fixed; inset: 0; z-index: 2100;
+    background: rgba(4, 4, 4, 0.96); backdrop-filter: blur(24px);
+    padding: 24px; align-items: center; justify-content: center;
+  }
+  .receipt-modal.active { display: flex; animation: fadeInModal 0.3s ease; }
+  @keyframes fadeInModal { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+  .receipt-card {
+    max-width: 680px; width: 100%;
+    background: var(--dark-surface); border: 2px solid var(--red-bright);
+    border-radius: var(--radius-lg); padding: 40px;
+    box-shadow: 0 0 50px rgba(229, 9, 20, 0.4);
+    position: relative; overflow: hidden;
+  }
+  .receipt-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--red-primary), var(--red-bright), var(--red-primary));
+  }
+
+  .receipt-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 24px;
+  }
+  .receipt-title {
+    font-family: var(--font-barlow); font-size: 26px; font-weight: 900;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--white);
+  }
+  .receipt-id {
+    font-family: var(--font-mono); font-size: 13px; color: var(--red-bright);
+    letter-spacing: 0.15em; font-weight: 700; margin-top: 4px;
+  }
+  .receipt-badge {
+    background: var(--red-dim); border: 1px solid var(--red-bright);
+    color: var(--red-bright); font-family: var(--font-mono); font-size: 11px;
+    font-weight: 700; padding: 4px 12px; border-radius: 3px; letter-spacing: 0.15em;
+  }
+
+  .receipt-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+  }
+  .receipt-item {
+    background: var(--black); border: 1px solid var(--border);
+    padding: 14px 18px; border-radius: var(--radius-sm);
+  }
+  .receipt-item-label {
+    font-family: var(--font-mono); font-size: 10px; color: var(--white-muted);
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .receipt-item-value {
+    font-family: var(--font-syne); font-size: 14px; font-weight: 700;
+    color: var(--white);
+  }
+
+  .receipt-notes-box {
+    background: var(--black); border: 1px solid var(--border);
+    padding: 16px; border-radius: var(--radius-sm); margin-bottom: 28px;
+  }
+
+  .receipt-actions {
+    display: flex; gap: 14px;
+  }
+  .receipt-btn-primary {
+    flex: 1; padding: 14px; background: var(--red-primary);
+    border: 1px solid var(--red-bright); color: var(--white);
+    font-family: var(--font-barlow); font-size: 13px; font-weight: 800;
+    letter-spacing: 0.16em; text-transform: uppercase; border-radius: var(--radius-sm);
+    cursor: pointer; transition: all var(--trans-fast); text-align: center;
+  }
+  .receipt-btn-primary:hover { background: var(--red-bright); }
+  .receipt-btn-secondary {
+    padding: 14px 24px; background: transparent; border: 1px solid var(--border);
+    color: var(--white-muted); font-family: var(--font-barlow); font-size: 13px; font-weight: 800;
+    letter-spacing: 0.16em; text-transform: uppercase; border-radius: var(--radius-sm);
+    cursor: pointer; transition: all var(--trans-fast);
+  }
+  .receipt-btn-secondary:hover { color: var(--white); border-color: var(--white); }
+
+  /* ─────────────────────────────────────────────────────────
+     INTERACTIVE AI ASSISTANT / CHAT POPOVER
+     ───────────────────────────────────────────────────────── */
+  .chat-fab {
+    position: fixed; bottom: 32px; right: 32px; z-index: 900;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--red-primary); border: 2px solid var(--red-bright);
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(229, 9, 20, 0.5);
+    transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+  }
+  .chat-fab:hover {
+    transform: scale(1.08); box-shadow: 0 12px 32px rgba(255, 30, 39, 0.7);
+  }
+
+  .chat-popover {
+    display: none; position: fixed; bottom: 104px; right: 32px; z-index: 901;
+    width: 380px; max-width: calc(100vw - 48px); height: 500px;
+    background: var(--dark-surface); border: 1px solid var(--red-bright);
+    border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    flex-direction: column; overflow: hidden; backdrop-filter: blur(16px);
+  }
+  .chat-popover.open { display: flex; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .chat-header {
+    background: var(--black); padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chat-title {
+    font-family: var(--font-barlow); font-size: 16px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--white);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .chat-title span { color: var(--red-bright); }
+  .chat-close {
+    background: none; border: none; color: var(--white-muted); cursor: pointer; font-size: 18px;
+  }
+
+  .chat-messages {
+    flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
+  }
+  .msg {
+    max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 13px; line-height: 1.5;
+  }
+  .msg.bot {
+    background: var(--dark-card); border: 1px solid var(--border); color: var(--white); align-self: flex-start;
+  }
+  .msg.user {
+    background: var(--red-primary); color: var(--white); align-self: flex-end;
+  }
+
+  .chat-input-area {
+    padding: 14px; background: var(--black); border-top: 1px solid var(--border);
+    display: flex; gap: 8px;
+  }
+  .chat-input {
+    flex: 1; background: var(--dark-surface); border: 1px solid var(--border);
+    padding: 10px 14px; border-radius: var(--radius-sm); color: var(--white); font-size: 13px;
+  }
+  .chat-send {
+    background: var(--red-primary); border: none; color: var(--white);
+    padding: 0 16px; border-radius: var(--radius-sm); cursor: pointer; font-weight: 700;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     FULLSCREEN LIGHTBOX MODAL
+     ───────────────────────────────────────────────────────── */
+  .lightbox-modal {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(4, 4, 4, 0.95); backdrop-filter: blur(20px);
+    padding: 48px; align-items: center; justify-content: center;
+  }
+  .lightbox-modal.active { display: flex; }
+
+  .lightbox-content {
+    max-width: 1100px; width: 100%; display: grid; grid-template-columns: 2fr 1fr; gap: 40px;
+    background: var(--dark-surface); border: 1px solid var(--red-bright);
+    border-radius: var(--radius-lg); overflow: hidden; position: relative;
+  }
+
+  .lightbox-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; max-height: 70vh; display: block;
+  }
+
+  .lightbox-details {
+    padding: 36px 28px; display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .lightbox-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: none;
+    color: var(--white); font-size: 28px; cursor: pointer; z-index: 10;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     FOOTER
+     ───────────────────────────────────────────────────────── */
+  footer {
+    background: var(--black); border-top: 1px solid var(--border);
+    padding: 60px 48px 36px; text-align: center; margin-top: 120px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-barlow); font-size: 28px; font-weight: 900;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--white);
+    margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--red-bright); }
+
+  .footer-shutter-flash {
+    position: fixed; inset: 0; background: var(--white); opacity: 0; pointer-events: none; z-index: 99999;
+  }
+  .footer-shutter-flash.flash { animation: shutterFlash 0.3s ease forwards; }
+  @keyframes shutterFlash { 0% { opacity: 0.6; } 100% { opacity: 0; } }
+
+  /* ─────────────────────────────────────────────────────────
+     RESPONSIVE BREAKPOINTS (Ensuring NO OVERLAPPING TEXT)
+     ───────────────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    section { padding: 80px 24px; }
+    nav { padding: 0 24px; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .portfolio-grid, .gear-grid, .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-container { grid-template-columns: 1fr; padding: 36px 28px; }
+    .lightbox-content { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { height: 64px; padding: 0 16px; }
+    .nav-logo { font-size: 18px; gap: 6px; }
+    .nav-logo .badge-red { font-size: 9px; padding: 2px 5px; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 8px 14px; font-size: 11px; }
+    .mobile-menu-btn { display: block; }
+    
+    .intro-scroll-container { height: 280vh; }
+    
+    .portfolio-filter-bar {
+      display: flex; gap: 8px; flex-wrap: nowrap;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px; margin-bottom: 28px;
+      scrollbar-width: none;
+    }
+    .portfolio-filter-bar::-webkit-scrollbar { display: none; }
+    .filter-tab { flex-shrink: 0; white-space: nowrap; padding: 8px 16px; font-size: 12px; }
+
+    .portfolio-grid, .gear-grid, .services-grid { grid-template-columns: 1fr; gap: 20px; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); margin-bottom: 60px; }
+    .stat-card { padding: 20px 12px; }
+    .stat-number { font-size: 2.3rem; }
+    .stat-label { font-size: 10px; letter-spacing: 0.14em; }
+    
+    .camera-hud { padding: 76px 16px 20px; }
+    .hud-top { font-size: 10px; letter-spacing: 0.08em; }
+    .hud-rec span { font-size: 11px; }
+    .hud-readout {
+      font-size: 10px; gap: 10px; padding: 6px 12px;
+      flex-wrap: wrap; justify-content: center; width: 100%;
+    }
+    .hud-center-crosshair { width: 110px; height: 110px; }
+
+    /* MOBILE STAGE HEADLINE ALIGNMENTS (KEEP CENTER VIDEO FRAME UNBLOCKED) */
+    #stage1 {
+      top: 16%; left: 16px; right: 16px;
+      transform: translateY(-15px);
+      max-width: calc(100vw - 32px); width: auto;
+      text-align: left;
+    }
+    #stage1.active { transform: translateY(0); }
+    .stage-1-title { font-size: clamp(2.0rem, 8.5vw, 3.4rem); line-height: 0.95; }
+    .stage-subtitle { font-size: 0.85rem; letter-spacing: 0.18em; margin-top: 10px; }
+
+    #stage2 {
+      top: 16%; left: 16px; right: 16px;
+      transform: translateY(-15px);
+      max-width: calc(100vw - 32px); width: auto;
+      text-align: right;
+    }
+    #stage2.active { transform: translateY(0); }
+    .stage-2-title { font-size: clamp(2.0rem, 8vw, 3.2rem); line-height: 0.95; }
+    .stage-2-eyebrow { font-size: 11px; letter-spacing: 0.2em; margin-bottom: 8px; }
+
+    #stage3 {
+      bottom: 64px; left: 16px; right: 16px;
+      transform: translateY(15px);
+      max-width: calc(100vw - 32px); width: auto;
+      text-align: left;
+    }
+    #stage3.active { transform: translateY(0); }
+    .stage-3-box { padding: 18px 20px; }
+    .stage-3-title { font-size: clamp(1.6rem, 6.5vw, 2.4rem); }
+    .stage-3-desc { font-size: 0.88rem; line-height: 1.45; }
+
+    /* FORM STACKING & TOUCH TARGETS FOR PHONES (16px to prevent iOS Safari auto-zoom) */
+    .form-row-2 { grid-template-columns: 1fr; gap: 14px; }
+    .form-input, .form-select, .form-textarea {
+      padding: 14px 16px; font-size: 16px; min-height: 48px;
+    }
+    .submit-btn { padding: 16px; font-size: 14px; min-height: 52px; }
+    .contact-container { padding: 24px 18px; border-radius: var(--radius-md); gap: 36px; }
+
+    /* CHAT FAB & POPOVER MOBILE ADAPTIVITY */
+    .chat-fab {
+      bottom: 18px; right: 18px;
+      width: 54px; height: 54px;
+    }
+    .chat-popover {
+      bottom: 80px; right: 12px; left: 12px;
+      width: auto; height: 70vh; max-height: 460px;
+    }
+
+    /* LIGHTBOX & RECEIPT MODAL MOBILE OPTIMIZATIONS */
+    .lightbox-modal, .receipt-modal { padding: 12px; }
+    .receipt-card { padding: 24px 16px; }
+    .receipt-grid { grid-template-columns: 1fr; gap: 10px; }
+    .receipt-item { grid-column: span 1 !important; }
+    .receipt-title { font-size: 20px; }
+    .receipt-actions { flex-direction: column; gap: 10px; }
+    .receipt-btn-primary, .receipt-btn-secondary { width: 100%; text-align: center; min-height: 46px; }
+    .lightbox-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+    .lightbox-img-wrap img { max-height: 45vh; }
+    .lightbox-details { padding: 20px 16px; }
+  }
+
+  @media (max-width: 480px) {
+    section { padding: 60px 16px; }
+    .stats-strip { grid-template-columns: 1fr; }
+    .stat-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-card:last-child { border-bottom: none; }
+    .hud-top span:nth-child(2) { display: none; }
+    .hud-readout span:nth-child(4) { display: none; }
+    .hud-center-crosshair { width: 90px; height: 90px; }
+    .section-heading { font-size: clamp(1.8rem, 7.5vw, 2.6rem); }
+    .section-tag { font-size: 10px; letter-spacing: 0.2em; }
+    .gallery-title { font-size: 20px; }
+    .gear-name { font-size: 22px; }
+    .service-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="footer-shutter-flash" id="shutterFlash"></div>
+
+<!-- NAVIGATION BAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    CAM <span>NIKON</span>
+    <span class="badge-red">Z9 PRO</span>
+  </a>
+  
+  <ul class="nav-links">
+    <li><a href="#intro" class="active">Home</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#gear">Nikon Gear</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#contact" class="nav-cta">Book Shoot</a>
+
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close Navigation">&times;</button>
+  <a href="#intro" onclick="closeMobileNav()">Home</a>
+  <a href="#portfolio" onclick="closeMobileNav()">Portfolio</a>
+  <a href="#gear" onclick="closeMobileNav()">Nikon Gear</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- CINEMATIC INTRO SCROLL SCRUB CONTAINER (300VH) -->
+<div class="intro-scroll-container" id="intro">
+  <div class="intro-sticky">
+    
+    <!-- HTML5 Video Element for Smooth Frame Scrubbing -->
+    <video class="intro-video" id="introVideo" muted playsinline webkit-playsinline x5-playsinline preload="auto" disableRemotePlayback disablePictureInPicture>
+      <source src="Person_catching_falling_camera_202608121132.mp4" type="video/mp4">
+      Your browser does not support HTML5 video playback.
+    </video>
+
+    <!-- Overlay Gradients -->
+    <div class="intro-overlay"></div>
+
+    <!-- CAMERA HUD TELEMETRY OVERLAY -->
+    <div class="camera-hud">
+      <div class="hud-top">
+        <div class="hud-rec">
+          <div class="rec-dot"></div>
+          <span>REC [00:01:24:08]</span>
+        </div>
+        <div>RAW 14-BIT &middot; 60 FPS &middot; BAT 98%</div>
+      </div>
+
+      <div class="hud-center-crosshair">
+        <div class="hud-corner tl"></div>
+        <div class="hud-corner tr"></div>
+        <div class="hud-corner bl"></div>
+        <div class="hud-corner br"></div>
+        <div class="hud-center-dot"></div>
+      </div>
+
+      <div class="hud-bottom">
+        <div class="hud-readout">
+          <span>ISO <em>100</em></span>
+          <span>f/<em>1.4</em></span>
+          <span>1/<em>8000s</em></span>
+          <span>35mm <em>S-LINE</em></span>
+        </div>
+        <div class="audio-meter">
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOLD CINEMATIC HEADLINE REVEALS (SYNCED WITH SCRUB PROGRESS) -->
+    <div class="intro-text-wrapper">
+      <!-- STAGE 1 (0% - 33%) -->
+      <div class="intro-stage active" id="stage1">
+        <h1 class="stage-1-title">MOMENTS <span>FROZEN</span> IN TIME</h1>
+        <p class="stage-subtitle">CINEMATIC VISUAL DIRECTION &middot; CAM NIKON</p>
+      </div>
+
+      <!-- STAGE 2 (33% - 66%) -->
+      <div class="intro-stage" id="stage2">
+        <p class="stage-2-eyebrow">// NIKON Z9 PRO TELEMETRY</p>
+        <h2 class="stage-2-title">PRECISION <em>LIGHT</em> &amp; MOTION</h2>
+      </div>
+
+      <!-- STAGE 3 (66% - 100%) -->
+      <div class="intro-stage" id="stage3">
+        <div class="stage-3-box">
+          <h2 class="stage-3-title">CAPTURING THE UNSEEN</h2>
+          <p class="stage-3-desc">High-speed motion, editorial elegance, and architectural grandeur crafted with <span>Nikon Z Flagship Optics</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"><div class="scroll-mouse-wheel"></div></div>
+      <span>SCROLL TO SCRUB INTRO</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN SITE CONTENT -->
+<main>
+  
+  <!-- STATS STRIP -->
+  <section style="padding-top: 40px; padding-bottom: 0;">
+    <div class="stats-strip">
+      <div class="stat-card">
+        <div class="stat-number">45.7 MP</div>
+        <div class="stat-label">Nikon Sensor Resolution</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Editorial &amp; Fashion Shoots</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">International Photography Awards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4.9 ★</div>
+        <div class="stat-label">Client Excellence Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SHOWCASE SECTION -->
+  <section id="portfolio">
+    <div class="section-tag">// PORTFOLIO ARCHIVE</div>
+    <h2 class="section-heading">FEATURED <em>WORKS</em></h2>
+    <p class="section-desc">Explore curated photography collections across architecture, street life, portraits, and landscapes shot on Nikon Z9 and prime S-Line lenses.</p>
+
+    <!-- Category Filter Tabs -->
+    <div class="portfolio-filter-bar">
+      <button class="filter-tab active" data-filter="all">All Works</button>
+      <button class="filter-tab" data-filter="architecture">Architecture</button>
+      <button class="filter-tab" data-filter="street">Street</button>
+      <button class="filter-tab" data-filter="portrait">Portrait</button>
+      <button class="filter-tab" data-filter="landscape">Landscape</button>
+    </div>
+
+    <!-- Portfolio Grid with Local Images -->
+    <div class="portfolio-grid" id="portfolioGrid">
+      
+      <!-- Card 1: Architecture Barbican -->
+      <div class="gallery-card" data-category="architecture" onclick="openLightbox('images/architecture-barbican.png', 'Barbican Brutalism', 'Architecture', 'Nikon Z9 · 14-24mm f/2.8 S · ISO 100 · f/8')">
+        <img src="images/architecture-barbican.png" alt="Barbican Architecture" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// ARCHITECTURE</div>
+          <div class="gallery-title">Barbican Structure</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>14-24mm f/2.8 S</span> &middot; <span><em>ISO 100</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Architecture Shard -->
+      <div class="gallery-card" data-category="architecture" onclick="openLightbox('images/architecture-shard.png', 'The Shard Horizon', 'Architecture', 'Nikon Z9 · 24-70mm f/2.8 S · ISO 64 · f/11')">
+        <img src="images/architecture-shard.png" alt="Shard Architecture" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// ARCHITECTURE</div>
+          <div class="gallery-title">The Shard Horizon</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>24-70mm f/2.8 S</span> &middot; <span><em>ISO 64</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Street Brick Lane -->
+      <div class="gallery-card" data-category="street" onclick="openLightbox('images/street-brick-lane.png', 'Brick Lane Stories', 'Street', 'Nikon Z9 · 35mm f/1.4 S · ISO 400 · f/2.0')">
+        <img src="images/street-brick-lane.png" alt="Street Photography Brick Lane" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// STREET</div>
+          <div class="gallery-title">Brick Lane Stories</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>35mm f/1.4 S</span> &middot; <span><em>ISO 400</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Street Camden -->
+      <div class="gallery-card" data-category="street" onclick="openLightbox('images/street-camden.png', 'Camden Neon Dusk', 'Street', 'Nikon Z9 · 50mm f/1.2 S · ISO 800 · f/1.4')">
+        <img src="images/street-camden.png" alt="Camden Street" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// STREET</div>
+          <div class="gallery-title">Camden Neon Dusk</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>50mm f/1.2 S</span> &middot; <span><em>ISO 800</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Portrait Artisan -->
+      <div class="gallery-card" data-category="portrait" onclick="openLightbox('images/portrait-artisan.png', 'The Artisan Gaze', 'Portrait', 'Nikon Z9 · 85mm f/1.2 S · ISO 200 · f/1.2')">
+        <img src="images/portrait-artisan.png" alt="Portrait Artisan" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// PORTRAIT</div>
+          <div class="gallery-title">The Artisan Gaze</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>85mm f/1.2 S</span> &middot; <span><em>ISO 200</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Landscape Thames -->
+      <div class="gallery-card" data-category="landscape" onclick="openLightbox('images/landscape-thames.png', 'Thames Fog & Tide', 'Landscape', 'Nikon Z9 · 70-200mm f/2.8 S · ISO 100 · f/5.6')">
+        <img src="images/landscape-thames.png" alt="Thames Landscape" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-category">// LANDSCAPE</div>
+          <div class="gallery-title">Thames Fog &amp; Tide</div>
+          <div class="gallery-exif">
+            <span>Nikon Z9</span> &middot; <span>70-200mm f/2.8 S</span> &middot; <span><em>ISO 100</em></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NIKON GEAR TELEMETRY SECTION -->
+  <section id="gear" class="gear-section">
+    <div class="section-tag">// EQUIPMENT TELEMETRY</div>
+    <h2 class="section-heading">NIKON <em>FLAGSHIP</em> GEAR</h2>
+    <p class="section-desc">Uncompromising optics and sensors designed to record extreme detail, dynamic range, and high-speed motion without fail.</p>
+
+    <div class="gear-grid">
+      
+      <div class="gear-card">
+        <span class="gear-badge">PRIMARY BODY</span>
+        <h3 class="gear-name">NIKON Z9</h3>
+        <p style="font-size: 14px; color: var(--white-muted); margin-bottom: 20px;">45.7MP Stacked CMOS Sensor &middot; 20fps RAW &middot; 8K/60p N-RAW</p>
+        <ul class="gear-specs">
+          <li>120 fps High-Speed Frame Capture</li>
+          <li>Dual CFexpress Type B Slots</li>
+          <li>Subject Detection 3D Tracking AF</li>
+          <li>Extreme Weather-Sealed Magnesium Alloy</li>
+        </ul>
+      </div>
+
+      <div class="gear-card">
+        <span class="gear-badge">PRIMES &amp; OPTICS</span>
+        <h3 class="gear-name">S-LINE GLASS</h3>
+        <p style="font-size: 14px; color: var(--white-muted); margin-bottom: 20px;">Nikkor Z 85mm f/1.2 S &amp; 35mm f/1.4 S</p>
+        <ul class="gear-specs">
+          <li>Nano Crystal &amp; ARNEO Coating</li>
+          <li>Multi-Focus Stepping Motor System</li>
+          <li>Zero Optical Aberration at Wide Apertures</li>
+          <li>Stepless Silent Control Ring</li>
+        </ul>
+      </div>
+
+      <div class="gear-card">
+        <span class="gear-badge">LIGHTING &amp; RIG</span>
+        <h3 class="gear-name">PROFOTO B10X</h3>
+        <p style="font-size: 14px; color: var(--white-muted); margin-bottom: 20px;">High Speed Sync 500Ws Location Flashes</p>
+        <ul class="gear-specs">
+          <li>AirRemotes for TTL &amp; Manual Control</li>
+          <li>Continuous LED Bi-Color Modeling Lamp</li>
+          <li>Carbon Fiber Monopods &amp; C-Stands</li>
+          <li>72-Hour Mobile Power Station</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES & PRICING SECTION -->
+  <section id="services">
+    <div class="section-tag">// CREATIVE PACKAGES</div>
+    <h2 class="section-heading">SERVICES &amp; <em>RATES</em></h2>
+    <p class="section-desc">Tailored photographic sessions engineered with cinematic lighting, rapid gallery delivery, and full commercial usage rights.</p>
+
+    <div class="services-grid">
+      
+      <!-- Service 1 -->
+      <div class="service-card">
+        <div>
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <h3 class="service-title">PORTRAIT SESSIONS</h3>
+          <p class="service-desc">Individual, executive, or artist portraiture focused on mood, shadow, and authentic expression.</p>
+          <ul class="service-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 2 Hours Location or Studio Session</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 25 High-Res Color Graded Retouches</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Online Gallery Delivery in 48 Hours</li>
+          </ul>
+        </div>
+        <a href="#contact" class="service-cta" onclick="selectService('Portrait Sessions')">Book Portrait</a>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card popular">
+        <span class="popular-tag">MOST POPULAR</span>
+        <div>
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <h3 class="service-title">EDITORIAL &amp; FASHION</h3>
+          <p class="service-desc">High-impact brand campaigns, lookbooks, and magazine editorial direction.</p>
+          <ul class="service-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Full Day Shoot (Up to 8 Hours)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Complete Raw Proofs + 50 Master Edits</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Full Commercial &amp; Licensing Rights</li>
+          </ul>
+        </div>
+        <a href="#contact" class="service-cta" onclick="selectService('Editorial & Fashion')">Book Editorial</a>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card">
+        <div>
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="service-title">ARCHITECTURE &amp; SPACES</h3>
+          <p class="service-desc">Precision structural, interior, and urban architectural documentation.</p>
+          <ul class="service-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Day &amp; Dusk Twilight Bracketed Exposures</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Perspective &amp; Tilt-Shift Corrections</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> High-Resolution Print Ready Files</li>
+          </ul>
+        </div>
+        <a href="#contact" class="service-cta" onclick="selectService('Architecture & Spaces')">Book Architecture</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOOKING & CONTACT SECTION -->
+  <section id="contact">
+    <div class="section-tag">// DIRECT CONTACT</div>
+    <h2 class="section-heading">START A <em>PROJECT</em></h2>
+    
+    <div class="contact-container">
+      <div>
+        <p class="section-desc" style="margin-bottom: 24px;">Available for commercial commissions, editorial assignments, and worldwide travel. Fill out the form or reach out directly.</p>
+        
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <strong>DIRECT EMAIL</strong>
+              <span>cam@nikonphotographer.com</span>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <strong>STUDIO LOCATION</strong>
+              <span>London, UK &middot; Available Worldwide</span>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <strong>INSTAGRAM</strong>
+              <span>@cam_nikon_photo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simplified Photo Booking Form -->
+      <form class="booking-form" id="bookingForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>YOUR NAME *</label>
+            <input type="text" class="form-input" id="bookName" placeholder="e.g. Sarah Jenkins" required>
+          </div>
+          <div class="form-group">
+            <label>EMAIL OR PHONE *</label>
+            <input type="text" class="form-input" id="bookContact" placeholder="e.g. sarah@gmail.com or +44 7911 123456" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>WHAT KIND OF PHOTOS WOULD YOU LIKE? *</label>
+          <select class="form-select" id="serviceSelect" required>
+            <option value="Portrait & Solo Shoot">Portrait &amp; Solo Shoot</option>
+            <option value="Couples & Family Photos">Couples &amp; Family Photos</option>
+            <option value="Event & Celebration Photos">Event &amp; Celebration Photos</option>
+            <option value="Fashion & Creative Lookbook">Fashion &amp; Creative Lookbook</option>
+            <option value="Architecture & Space Photos">Architecture &amp; Space Photos</option>
+            <option value="I'm Not Sure Yet (Let's Chat!)">I'm Not Sure Yet (Let's Chat!)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>PREFERRED DATE OR MONTH (OPTIONAL)</label>
+          <input type="text" class="form-input" id="bookDate" placeholder="e.g. Next month, October 12, or Flexible">
+        </div>
+
+        <div class="form-group">
+          <label>ANYTHING ELSE YOU'D LIKE TO SHARE? (OPTIONAL)</label>
+          <textarea class="form-textarea" id="bookNotes" rows="3" placeholder="Feel free to mention location ideas, shoot vibes, or any questions you have!"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">SEND PHOTO BOOKING REQUEST 📸</button>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- SIMPLE PHOTO BOOKING CONFIRMATION RECEIPT MODAL -->
+<div class="receipt-modal" id="bookingReceiptModal" onclick="closeReceiptModal(event)">
+  <div class="receipt-card" onclick="event.stopPropagation()">
+    <div class="receipt-header">
+      <div>
+        <div class="receipt-title">PHOTO REQUEST RECEIVED</div>
+        <div class="receipt-id" id="receiptId">REF: #CN-2026-9214</div>
+      </div>
+      <span class="receipt-badge">● TRANSMITTED TO CAM</span>
+    </div>
+
+    <div class="receipt-grid">
+      <div class="receipt-item">
+        <div class="receipt-item-label">CLIENT NAME</div>
+        <div class="receipt-item-value" id="receiptName">-</div>
+      </div>
+      <div class="receipt-item">
+        <div class="receipt-item-label">PHOTO STYLE</div>
+        <div class="receipt-item-value" id="receiptService">-</div>
+      </div>
+      <div class="receipt-item" style="grid-column: span 2;">
+        <div class="receipt-item-label">CONTACT INFORMATION</div>
+        <div class="receipt-item-value" id="receiptContact">-</div>
+      </div>
+      <div class="receipt-item" style="grid-column: span 2;">
+        <div class="receipt-item-label">PREFERRED DATE / TIMELINE</div>
+        <div class="receipt-item-value" id="receiptDateLoc">-</div>
+      </div>
+    </div>
+
+    <div class="receipt-notes-box">
+      <div class="receipt-item-label">SHOOT NOTES</div>
+      <p style="font-size: 13px; color: var(--white-muted); margin-top: 4px; line-height: 1.5;" id="receiptNotes">Standard photo request.</p>
+    </div>
+
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--red-bright); margin-bottom: 20px; text-align: center;">
+      ⚡ Cam will review your request and get back to you within 24 hours with ideas and availability!
+    </p>
+
+    <div class="receipt-actions">
+      <button class="receipt-btn-primary" onclick="copyReceiptDetails()">COPY BOOKING RECEIPT 📋</button>
+      <button class="receipt-btn-secondary" onclick="closeReceiptModal()">DONE</button>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING CHAT ASSISTANT FAB -->
+<button class="chat-fab" onclick="toggleChatPopover()" aria-label="Open AI Assistant Chat">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
+
+<!-- CHAT POPOVER WIDGET -->
+<div class="chat-popover" id="chatPopover">
+  <div class="chat-header">
+    <div class="chat-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-bright)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      NIKON <span>AI ASSISTANT</span>
+    </div>
+    <button class="chat-close" onclick="toggleChatPopover()">&times;</button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      Hello! I'm Cam's virtual assistant. Ask me about booking rates, camera gear, or scheduling availability!
+    </div>
+  </div>
+
+  <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question..." required>
+    <button type="submit" class="chat-send">SEND</button>
+  </form>
+</div>
+
+<!-- FULLSCREEN LIGHTBOX MODAL -->
+<div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <div class="lightbox-img-wrap">
+      <img id="lightboxImg" src="" alt="Portfolio Large View">
+    </div>
+    <div class="lightbox-details">
+      <div>
+        <div class="gallery-category" id="lightboxCategory">// CATEGORY</div>
+        <h3 class="gallery-title" id="lightboxTitle" style="margin-bottom: 16px;">Title</h3>
+        <p style="font-family: var(--font-mono); font-size: 12px; color: var(--white-muted); line-height: 1.6;" id="lightboxExif">
+          EXIF info
+        </p>
+      </div>
+      <a href="#contact" class="nav-cta" onclick="closeLightbox()" style="text-align:center; margin-top:24px;">Inquire About This Shot</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CAM <span>NIKON</span> PHOTOGRAPHY</div>
+  <p style="font-family: var(--font-mono); font-size: 11px; color: var(--white-dim); letter-spacing: 0.2em; text-transform: uppercase;">
+    &copy; 2026 CAM NIKON &middot; POWERED BY NIKON Z9 &middot; ALL RIGHTS RESERVED
+  </p>
+</footer>
+
+<!-- ─────────────────────────────────────────────────────────
+     SCRIPTS — SCROLL SCRUB, FILTER, LIGHTBOX, CHAT
+     ───────────────────────────────────────────────────────── */
+-->
+<script>
+  /* ─────────────────────────────────────────────────────────
+     HIGH-PERFORMANCE ULTRA-SMOOTH VIDEO SCROLL SCRUB ENGINE
+     ───────────────────────────────────────────────────────── */
+  const video = document.getElementById('introVideo');
+  const scrollContainer = document.getElementById('intro');
+  const stage1 = document.getElementById('stage1');
+  const stage2 = document.getElementById('stage2');
+  const stage3 = document.getElementById('stage3');
+
+  let isVideoReady = false;
+  let targetProgress = 0;
+  let currentProgress = 0;
+  let isSeeking = false;
+  let pendingSeekTime = null;
+
+  // Immediate decoder warmup on page load & first touch/scroll
+  function warmUpVideoDecoder() {
+    if (!video) return;
+    video.muted = true;
+    video.playsInline = true;
+    
+    // Unlock hardware decoder on mobile Safari & Chrome
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        video.pause();
+        isVideoReady = true;
+        calculateAndApplyProgress();
+      }).catch(() => {
+        isVideoReady = true;
+        calculateAndApplyProgress();
+      });
+    } else {
+      isVideoReady = true;
+    }
+  }
+
+  // Pre-warm events
+  document.addEventListener('DOMContentLoaded', warmUpVideoDecoder, { once: true });
+  window.addEventListener('touchstart', warmUpVideoDecoder, { passive: true, once: true });
+  window.addEventListener('pointerdown', warmUpVideoDecoder, { passive: true, once: true });
+  window.addEventListener('scroll', warmUpVideoDecoder, { passive: true, once: true });
+
+  video.addEventListener('loadedmetadata', () => {
+    isVideoReady = true;
+    calculateAndApplyProgress();
+  });
+  video.addEventListener('canplay', () => { isVideoReady = true; });
+  video.addEventListener('canplaythrough', () => { isVideoReady = true; });
+
+  // Non-blocking seek resolution
+  video.addEventListener('seeked', () => {
+    isSeeking = false;
+    if (pendingSeekTime !== null) {
+      const nextTime = pendingSeekTime;
+      pendingSeekTime = null;
+      performSeek(nextTime);
+    }
+  });
+
+  function performSeek(time) {
+    if (!video || !video.duration || isNaN(time)) return;
+    const clampedTime = Math.min(Math.max(time, 0), video.duration - 0.001);
+    
+    if (!isSeeking) {
+      isSeeking = true;
+      if ('fastSeek' in video && typeof video.fastSeek === 'function') {
+        try {
+          video.fastSeek(clampedTime);
+        } catch (e) {
+          video.currentTime = clampedTime;
+        }
+      } else {
+        video.currentTime = clampedTime;
+      }
+    } else {
+      pendingSeekTime = clampedTime;
+    }
+  }
+
+  // Calculate instant 1:1 scroll progress starting from the very first swipe pixel
+  function calculateAndApplyProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+    const containerTop = scrollContainer.offsetTop;
+    const containerHeight = scrollContainer.offsetHeight - window.innerHeight;
+    
+    if (containerHeight > 0) {
+      const relativeScroll = scrollTop - containerTop;
+      targetProgress = Math.min(Math.max(relativeScroll / containerHeight, 0), 1);
+    }
+  }
+
+  // Listen directly with passive listeners for instant 0-delay response on touch and scroll
+  window.addEventListener('scroll', calculateAndApplyProgress, { passive: true });
+  window.addEventListener('touchmove', calculateAndApplyProgress, { passive: true });
+  window.addEventListener('wheel', calculateAndApplyProgress, { passive: true });
+  window.addEventListener('resize', calculateAndApplyProgress, { passive: true });
+
+  // 60FPS RAF smoothing loop
+  function scrubAnimationLoop() {
+    // Ultra-snappy Lerp interpolation (0.35 factor provides instant response with smooth deceleration)
+    const delta = targetProgress - currentProgress;
+    if (Math.abs(delta) > 0.0001) {
+      currentProgress += delta * 0.38;
+    } else {
+      currentProgress = targetProgress;
+    }
+
+    if (isVideoReady && video.duration) {
+      const targetTime = currentProgress * video.duration;
+      if (Math.abs(targetTime - video.currentTime) > 0.012) {
+        performSeek(targetTime);
+      }
+    }
+
+    // Update overlay text stages smoothly based on targetProgress
+    if (targetProgress < 0.33) {
+      stage1.classList.add('active');
+      stage2.classList.remove('active');
+      stage3.classList.remove('active');
+    } else if (targetProgress >= 0.33 && targetProgress < 0.66) {
+      stage1.classList.remove('active');
+      stage2.classList.add('active');
+      stage3.classList.remove('active');
+    } else {
+      stage1.classList.remove('active');
+      stage2.classList.remove('active');
+      stage3.classList.add('active');
+    }
+
+    requestAnimationFrame(scrubAnimationLoop);
+  }
+  requestAnimationFrame(scrubAnimationLoop);
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  mobileMenuBtn.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const galleryCards = document.querySelectorAll('.gallery-card');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filter = tab.getAttribute('data-filter');
+      galleryCards.forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  const lightboxModal = document.getElementById('lightboxModal');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxCategory = document.getElementById('lightboxCategory');
+  const lightboxExif = document.getElementById('lightboxExif');
+
+  function openLightbox(imgSrc, title, category, exif) {
+    lightboxImg.src = imgSrc;
+    lightboxTitle.textContent = title;
+    lightboxCategory.textContent = '// ' + category.toUpperCase();
+    lightboxExif.textContent = exif;
+    lightboxModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (!e || e.target === lightboxModal || e.target.classList.contains('lightbox-close')) {
+      lightboxModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function selectService(serviceName) {
+    const serviceSelect = document.getElementById('serviceSelect');
+    if (serviceSelect) {
+      serviceSelect.value = serviceName;
+    }
+  }
+
+  function handleFormSubmit(e) {
+    if (e) e.preventDefault();
+
+    const flash = document.getElementById('shutterFlash');
+    if (flash) {
+      flash.classList.remove('flash');
+      void flash.offsetWidth;
+      flash.classList.add('flash');
+    }
+
+    const nameInput = document.getElementById('bookName');
+    const contactInput = document.getElementById('bookContact');
+    const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Valued Client';
+    const contact = contactInput && contactInput.value.trim() ? contactInput.value.trim() : 'Contact Provided';
+    const service = document.getElementById('serviceSelect') ? document.getElementById('serviceSelect').value : 'Portrait & Solo Shoot';
+    const dateInput = document.getElementById('bookDate');
+    const date = dateInput && dateInput.value.trim() ? dateInput.value.trim() : 'Flexible / To Be Discussed';
+    const notesInput = document.getElementById('bookNotes');
+    const notes = notesInput && notesInput.value.trim() ? notesInput.value.trim() : 'No specific notes provided.';
+
+    const randomId = 'CN-2026-' + Math.floor(1000 + Math.random() * 9000);
+
+    const receiptId = document.getElementById('receiptId');
+    const receiptName = document.getElementById('receiptName');
+    const receiptService = document.getElementById('receiptService');
+    const receiptContact = document.getElementById('receiptContact');
+    const receiptDateLoc = document.getElementById('receiptDateLoc');
+    const receiptNotes = document.getElementById('receiptNotes');
+
+    if (receiptId) receiptId.textContent = 'REF: #' + randomId;
+    if (receiptName) receiptName.textContent = name;
+    if (receiptService) receiptService.textContent = service;
+    if (receiptContact) receiptContact.textContent = contact;
+    if (receiptDateLoc) receiptDateLoc.textContent = date;
+    if (receiptNotes) receiptNotes.textContent = notes;
+
+    const receiptModal = document.getElementById('bookingReceiptModal');
+    if (receiptModal) receiptModal.classList.add('active');
+  }
+
+  function closeReceiptModal(e) {
+    const receiptModal = document.getElementById('bookingReceiptModal');
+    if (!e || e.target === receiptModal || e.target.classList.contains('receipt-btn-secondary')) {
+      receiptModal.classList.remove('active');
+      document.getElementById('bookingForm').reset();
+    }
+  }
+
+  function copyReceiptDetails() {
+    const id = document.getElementById('receiptId').textContent;
+    const name = document.getElementById('receiptName').textContent;
+    const service = document.getElementById('receiptService').textContent;
+    const contact = document.getElementById('receiptContact').textContent;
+    const textToCopy = `CAM NIKON PHOTO BOOKING RECEIPT\n${id}\nClient: ${name}\nStyle: ${service}\nContact: ${contact}\nStatus: Transmitted to Cam`;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('📋 Photo Booking Receipt copied to clipboard!');
+      }).catch(() => {
+        alert('Photo Booking Reference: ' + id);
+      });
+    } else {
+      alert('Photo Booking Reference: ' + id);
+    }
+  }
+
+  const chatPopover = document.getElementById('chatPopover');
+  const chatMessages = document.getElementById('chatMessages');
+
+  function toggleChatPopover() {
+    chatPopover.classList.toggle('open');
+  }
+
+  function handleChatSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const query = input.value.trim();
+    if (!query) return;
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg user';
+    userMsg.textContent = query;
+    chatMessages.appendChild(userMsg);
+
+    input.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'msg bot';
+
+      const lower = query.toLowerCase();
+      if (lower.includes('rate') || lower.includes('price') || lower.includes('cost')) {
+        botMsg.textContent = "Portrait sessions start at £450, while full-day Editorial & Commercial shoots are custom quoted depending on location & licensing!";
+      } else if (lower.includes('gear') || lower.includes('camera') || lower.includes('lens')) {
+        botMsg.textContent = "Cam shoots exclusively on the flagship 45.7MP Nikon Z9 with S-Line primes (85mm f/1.2 S, 35mm f/1.4 S) and Profoto lighting!";
+      } else if (lower.includes('book') || lower.includes('availability') || lower.includes('date')) {
+        botMsg.textContent = "Cam is currently accepting bookings across UK & Worldwide for 2026. Please fill out the contact form below to secure your date!";
+      } else {
+        botMsg.textContent = "Thank you for asking! For specific shoot details or custom commercial briefs, please send an inquiry through our contact form below.";
+      }
+
+      chatMessages.appendChild(botMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 600);
+  }
+</script>
+
+</body>
+</html>
