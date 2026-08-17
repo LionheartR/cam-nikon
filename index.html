@@ -214,14 +214,19 @@
   .intro-scroll-container {
     position: relative;
     height: 352vh;
+    height: 352dvh;
     background: var(--black);
+    margin: 0;
+    padding: 0;
   }
 
   .intro-sticky {
     position: sticky; top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    width: 100%; height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     display: flex; align-items: center; justify-content: center;
+    touch-action: pan-y;
   }
 
   /* Canvas Element with GPU compositing layer */
@@ -423,11 +428,11 @@
     text-shadow: 0 0 35px rgba(255, 30, 39, 0.75);
   }
 
-  /* STAGE 3: Bottom Left Aligned Panel */
+  /* STAGE 3: Left Aligned Flank (Cleanly separated from bottom HUD) */
   #stage3 {
     position: absolute;
-    bottom: 90px; left: 5%; top: auto; right: auto;
-    transform: translateY(25px);
+    top: 50%; left: 5%; right: auto; bottom: auto;
+    transform: translateY(-50%) translateX(-25px);
     max-width: 500px; width: auto;
     text-align: left;
     opacity: 0; visibility: hidden;
@@ -435,7 +440,7 @@
   }
   #stage3.active {
     opacity: 1; visibility: visible;
-    transform: translateY(0);
+    transform: translateY(-50%) translateX(0);
   }
 
   .stage-3-box {
@@ -470,6 +475,12 @@
     z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 8px;
     color: var(--white-dim); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em;
     text-transform: uppercase;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .scroll-indicator.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .scroll-mouse {
     width: 20px; height: 32px; border: 2px solid var(--white-dim); border-radius: 10px;
@@ -1105,7 +1116,8 @@
     .nav-cta { padding: 8px 14px; font-size: 11px; }
     .mobile-menu-btn { display: block; }
     
-    .intro-scroll-container { height: 280vh; }
+    .intro-scroll-container { height: 280vh; height: 280dvh; }
+    .intro-sticky { height: 100vh; height: 100dvh; }
     
     .portfolio-filter-bar {
       display: flex; gap: 8px; flex-wrap: nowrap;
@@ -1125,15 +1137,17 @@
     .camera-hud { padding: 76px 16px 20px; }
     .hud-top { font-size: 10px; letter-spacing: 0.08em; }
     .hud-rec span { font-size: 11px; }
+    .hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
     .hud-readout {
       font-size: 10px; gap: 10px; padding: 6px 12px;
-      flex-wrap: wrap; justify-content: center; width: 100%;
+      white-space: nowrap;
     }
+    .audio-meter { display: none; }
     .hud-center-crosshair { width: 110px; height: 110px; }
 
-    /* MOBILE STAGE HEADLINE ALIGNMENTS (KEEP CENTER VIDEO FRAME UNBLOCKED) */
+    /* MOBILE STAGE HEADLINE ALIGNMENTS (CLEAN TOP AREA AWAY FROM BOTTOM HUD) */
     #stage1 {
-      top: 16%; left: 16px; right: 16px;
+      top: 16%; left: 16px; right: 16px; bottom: auto;
       transform: translateY(-15px);
       max-width: calc(100vw - 32px); width: auto;
       text-align: left;
@@ -1143,7 +1157,7 @@
     .stage-subtitle { font-size: 0.85rem; letter-spacing: 0.18em; margin-top: 10px; }
 
     #stage2 {
-      top: 16%; left: 16px; right: 16px;
+      top: 16%; left: 16px; right: 16px; bottom: auto;
       transform: translateY(-15px);
       max-width: calc(100vw - 32px); width: auto;
       text-align: right;
@@ -1153,8 +1167,8 @@
     .stage-2-eyebrow { font-size: 11px; letter-spacing: 0.2em; margin-bottom: 8px; }
 
     #stage3 {
-      bottom: 64px; left: 16px; right: 16px;
-      transform: translateY(15px);
+      top: 16%; left: 16px; right: 16px; bottom: auto;
+      transform: translateY(-15px);
       max-width: calc(100vw - 32px); width: auto;
       text-align: left;
     }
@@ -1852,6 +1866,15 @@
       stage1.classList.remove('active');
       stage2.classList.remove('active');
       stage3.classList.add('active');
+    }
+
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+      if (scrollProgress > 0.03) {
+        scrollIndicator.classList.add('hidden');
+      } else {
+        scrollIndicator.classList.remove('hidden');
+      }
     }
   }
 
